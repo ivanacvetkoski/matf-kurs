@@ -1,0 +1,39 @@
+body {
+	background-color: #232323;
+	margin: 0;
+}
+
+#pallet {
+	margin: 10px auto;
+	max-width: 900px;
+}
+
+.box {
+	width: 15%;
+	padding-bottom: 15%;
+	float: left;
+	margin: 1.2%;
+}
+
+.mainBox {
+	width: 20%;
+	padding-bottom: 20%;
+	margin: auto;
+}
+
+h1 {
+	margin: 0;
+	padding: 20px 0;
+}
+
+#message {
+	display: inline-block;
+	width: 10%;
+	margin: auto;
+}
+
+#stripe {
+	background: white;
+	height: 20px;
+	text-align: center;
+}
