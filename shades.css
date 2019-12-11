@@ -1,5 +1,5 @@
 body {
-	background-color: #232323;
+	background-color: #1d1a1a;
 	margin: 0;
 }
 
@@ -13,6 +13,13 @@ body {
 	padding-bottom: 15%;
 	float: left;
 	margin: 1.2%;
+}
+
+button {
+	background: none;
+	height: 100%;
+	font-weight: 700;
+	letter-spacing: 1px;
 }
 
 .mainBox {

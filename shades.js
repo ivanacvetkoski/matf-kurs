@@ -5,7 +5,9 @@ var body = document.querySelector("body");
 var boxes = document.querySelectorAll(".box");
 var mainBox = document.querySelector(".mainBox");
 var message = document.querySelector("#message");
+var newBtn = document.querySelector("#new");
 var h1 = document.querySelector("h1");
+var score;
 
 main();
 
@@ -15,7 +17,7 @@ function main(){
 }
 
 function set(){
-
+	score = 50;
 	// pravimo niz random boja pozivom funkcije randomShades
 	shades = randomShades(numberOfBoxes);
 	
@@ -31,7 +33,12 @@ function set(){
 		}
 	}
 	h1.style.background = "white";
+	body.style.background = "#1d1a1a";
 }
+
+newBtn.addEventListener("click", function(){
+	set();
+})
 
 function randomShades(num){
 
@@ -80,16 +87,18 @@ function alignBoxes(){
 
 			if(this.style.background === oneShade){
 				message.textContent = "YES";
-				h1.style.background = "pink";
-				body.style.background = "pink";
-
+				h1.style.background = "gray";
+				body.style.background = "gray";
+				//console.log(score);
+				
 				for(var i = 0; i < boxes.length; i++){
 					if(boxes[i].style.background !== oneShade)
-						boxes[i].style.background="pink";
+						boxes[i].style.background="gray";
 					}
 					
 			} else {
-					this.style.background = "#232323";
+					score-=5;
+					this.style.background = "#1d1a1a";
 					message.textContent = "No...Try again"
 			}
 		});
