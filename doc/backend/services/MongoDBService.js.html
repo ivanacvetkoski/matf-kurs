@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MongoDBService.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "backend/services/MongoDBService.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>MongoDBService.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+<span class="hljs-keyword">const</span> mongoClient = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mongodb'</span>).MongoClient;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MongoDBService</span> </span>{
+  <span class="hljs-keyword">constructor</span>(url, databaseName) {
+    <span class="hljs-keyword">this</span>.url = url;
+    <span class="hljs-keyword">this</span>.databaseName = databaseName;
+  }
+
+  <span class="hljs-keyword">async</span> connect() {
+    <span class="hljs-keyword">const</span> connect = util.promisify(mongoClient.connect);
+
+    <span class="hljs-keyword">this</span>.client = <span class="hljs-keyword">await</span> connect(<span class="hljs-keyword">this</span>.url);
+    <span class="hljs-keyword">this</span>.database = <span class="hljs-keyword">this</span>.client.db(<span class="hljs-keyword">this</span>.databaseName);
+  }
+
+  disconnect() {
+    <span class="hljs-keyword">this</span>.client.close();
+  }
+
+  find(collection, parameters = {}) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+      <span class="hljs-keyword">this</span>.database.collection(collection).find(parameters).toArray(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">error, data</span>) </span>{
+        <span class="hljs-keyword">if</span> (error) reject();
+
+        resolve(data);
+      });
+    });
+  }
+
+  findOne(collection, parameters) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+      <span class="hljs-keyword">this</span>.database.collection(collection).findOne(parameters, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">error, data</span>) </span>{
+        <span class="hljs-keyword">if</span> (error) reject();
+
+        resolve(data);
+      });
+    });
+  }
+
+  insert(collection, parameters) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+      <span class="hljs-keyword">this</span>.database.collection(collection).insertOne(parameters, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">error</span>) </span>{
+        <span class="hljs-keyword">if</span> (error) reject();
+
+        resolve();
+      });
+    });
+  }
+
+  update(collection, findParameters, updateParameters) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+      <span class="hljs-keyword">this</span>.database.collection(collection).updateOne(findParameters, { <span class="hljs-attr">$set</span>: updateParameters }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">error</span>) </span>{
+        <span class="hljs-keyword">if</span> (error) reject();
+
+        resolve();
+      });
+    });
+  }
+
+  <span class="hljs-keyword">delete</span>(collection, findParameters) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+      <span class="hljs-keyword">this</span>.database.collection(collection).deleteOne(findParameters, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">error</span>) </span>{
+        <span class="hljs-keyword">if</span> (error) reject(error);
+
+        resolve();
+      });
+    });
+  }
+}
+
+<span class="hljs-built_in">module</span>.exports = MongoDBService;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

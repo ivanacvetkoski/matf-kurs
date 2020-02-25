@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>UsersController.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "backend/controllers/UsersController.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>UsersController.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>);
+<span class="hljs-keyword">const</span> MongoDBService = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../services/MongoDBService'</span>);
+<span class="hljs-keyword">const</span> ObjectId = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mongodb'</span>).ObjectID;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UsersController</span> </span>{
+  <span class="hljs-keyword">constructor</span>(request, response) {
+    <span class="hljs-keyword">this</span>.request = request;
+    <span class="hljs-keyword">this</span>.response = response;
+
+    <span class="hljs-keyword">this</span>.mongoDBService = <span class="hljs-keyword">new</span> MongoDBService(<span class="hljs-string">'mongodb://root:example@localhost:27017'</span>, <span class="hljs-string">'memory-game'</span>);
+  }
+
+  <span class="hljs-keyword">static</span> registerRoutes(app) {
+    app.get(<span class="hljs-string">'/'</span>, (request, response) =&gt; {
+      <span class="hljs-keyword">new</span> UsersController(request, response).getUsers();
+    });
+
+
+    app.post(<span class="hljs-string">'/'</span>, (request, response) =&gt; {
+      <span class="hljs-keyword">new</span> UsersController(request, response).postUsers();
+    });
+  }
+  
+  <span class="hljs-keyword">async</span> getUsers() {
+    <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.mongoDBService.connect();
+
+    <span class="hljs-keyword">let</span> users = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.mongoDBService.find(<span class="hljs-string">'scores'</span>);
+
+    <span class="hljs-keyword">this</span>.mongoDBService.disconnect();
+    <span class="hljs-keyword">this</span>.response.send(users);
+  }
+
+  <span class="hljs-keyword">async</span> postUsers() {
+    <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.mongoDBService.connect();
+
+    <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.mongoDBService.insert(<span class="hljs-string">'scores'</span>, {
+      <span class="hljs-attr">name</span>: <span class="hljs-keyword">this</span>.request.body.name,
+      <span class="hljs-attr">score</span>: <span class="hljs-built_in">parseFloat</span>(<span class="hljs-keyword">this</span>.request.body.score),
+      <span class="hljs-attr">date</span>: <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>() 
+    });
+
+    <span class="hljs-keyword">this</span>.mongoDBService.disconnect();
+    <span class="hljs-keyword">this</span>.response.json({ <span class="hljs-attr">status</span>: <span class="hljs-string">'Success'</span> });
+  }
+}
+
+<span class="hljs-built_in">module</span>.exports = UsersController;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>mongo-init.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../";
+    var thisFile = "docker-entrypoint-initdb.d/mongo-init.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>mongo-init.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">let</span> users = [
+  {
+    <span class="hljs-string">"id"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-string">"name"</span>: <span class="hljs-string">"Frodo Baggins"</span>,
+    <span class="hljs-string">"email"</span>: <span class="hljs-string">"frodohasthering@lotr.com"</span>,
+    <span class="hljs-string">"phone"</span>: <span class="hljs-string">"00000000001"</span>
+  },
+  {
+    <span class="hljs-string">"id"</span>: <span class="hljs-number">2</span>,
+    <span class="hljs-string">"name"</span>: <span class="hljs-string">"Smeagol Gollum"</span>,
+    <span class="hljs-string">"email"</span>: <span class="hljs-string">"myprecious@gmail.com"</span>,
+    <span class="hljs-string">"phone"</span>: <span class="hljs-string">"00000000002"</span>
+  }
+];
+
+db.createCollection(<span class="hljs-string">'users'</span>);
+<span class="hljs-keyword">const</span> usersCollection = db.getCollection(<span class="hljs-string">'users'</span>);
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> user <span class="hljs-keyword">of</span> users)
+  usersCollection.insert(user);
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

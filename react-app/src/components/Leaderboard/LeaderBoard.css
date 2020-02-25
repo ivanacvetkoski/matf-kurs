@@ -1,0 +1,43 @@
+body {
+    background-color:#232323;
+    font-family: verdana;
+}
+
+#header {
+    color: white;
+    position: relative;
+    left: 210px;
+}
+.mainWrapper {
+    margin: auto;
+    margin-top: 30px;
+    width: 40%;
+    position: relative;
+}
+
+.board {
+    font-family: courier;
+    border-collapse: collapse;
+    border:  1px solid white;
+    width: 100%;
+  }
+  
+  .board td, .board th {
+    background-color: plum;
+    border-bottom: 1px solid white;
+    border-top: 1px solid white;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .board th {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: left;
+    background-color: purple;
+    border-top:  1px solid white;
+    color: white;
+    text-align: center;
+  }
+  
+  
