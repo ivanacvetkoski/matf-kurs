@@ -6,14 +6,13 @@ import GetResults from "../../apis/entries";
 class LeaderBoard extends React.Component {
   state = { results: [] };
 
-  // setting state here will trigger re-rendering
   componentDidMount() {
     this.fromMongo();
   }
 
   async fromMongo() {
     let results = await GetResults.getResults();
-    results = results.sort((a, b) => a.score < b.score);
+    results = results.sort((a, b) => b.score - a.score);
     this.setState({results:results});
   }
   render() {
